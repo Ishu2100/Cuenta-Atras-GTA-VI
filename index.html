@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Theft Auto VI | Cuenta Regresiva y Transmisión</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,800;0,900;1,900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Estilos para el visor de pantalla completa (Lightbox) */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .lightbox-modal.active {
+            display: flex;
+        }
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            cursor: zoom-in;
+            transition: transform 0.3s ease;
+        }
+        .lightbox-content.zoomed {
+            transform: scale(2);
+            cursor: zoom-out;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .gallery-card {
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .gallery-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff0055;
+        }
+        .gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            aspect-ratio: 16/9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-container" id="bgContainer"></div>
+    <div class="cinematic-overlay"></div>
+    <div class="ambient-glow"></div>
+
+    <audio id="bgAudio" loop>
+        <source src="assets/sounds/ambient.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="clickAudio">
+        <source src="assets/sounds/click.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="tickAudio">
+        <source src="assets/sounds/tick.mp3" type="audio/mpeg">
+    </audio>
+
+    <header class="site-header">
+        <div class="site-brand">
+            <a href="index.html">
+                <img src="assets/images/logo.png" alt="Logo de GTA VI" class="logo-img">
+            </a>
+        </div>
+        <nav class="site-nav" id="siteNav">
+            <a href="#countdown" class="nav-link active">Cuenta Atrás</a>
+            <a href="#news" class="nav-link">Protagonistas</a>
+            <a href="#trailer" class="nav-link">Trailer</a>
+            <a href="#imagenes" class="nav-link">Imágenes</a>
+        </nav>
+        <div class="header-actions">
+            <button id="soundToggle" class="action-btn" title="Activar/Desactivar Sonido">
+                <span class="sound-icon">🔇</span>
+                <span class="sound-label">AUDIO APAGADO</span>
+            </button>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir Menú">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section id="countdown" class="hero-section">
+            <h1 class="hero-title">GRAND THEFT AUTO <span class="highlight">VI</span></h1>
+            
+            <div class="hero-badge">
+                <span class="pulse-dot"></span> ESTADO: CUENTA ATRÁS OFICIAL
+            </div>
+
+            <div class="countdown-grid" id="countdownTimer">
+                <div class="time-box">
+                    <div class="time-value" id="days">000</div>
+                    <div class="time-label">DÍAS</div>
+                </div>
+                <div class="time-separator">:</div>
+                <div class="time-box">
+                    <div class="time-value" id="hours">00</div>
+                    <div class="time-label">HORAS</div>
+                </div>
+                <div class="time-separator">:</div>
+                <div class="time-box">
+                    <div class="time-value" id="minutes">00</div>
+                    <div class="time-label">MINUTOS</div>
+                </div>
+                <div class="time-separator">:</div>
+                <div class="time-box">
+                    <div class="time-value" id="seconds">00</div>
+                    <div class="time-label">SEGUNDOS</div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar-track">
+                    <div class="progress-bar-fill" id="progressBar"></div>
+                </div>
+                <div class="progress-percentage" id="progressText">92.66%</div>
+            </div>
+
+            <div class="target-date-tag" id="targetDateTag">
+                [ FECHA OBJETIVO: 19 DE NOVIEMBRE, 2026 ]
+            </div>
+
+            <div class="launch-active-banner" id="launchBanner" style="display: none;">
+                <h2>¡SE ACABÓ LA ESPERA, A DISFRUTAR!</h2>
+                <p>Después de tanto tiempo teorizando y aguantando... ¡Por fin ha llegado la hora de jugar a GTA VI y reventar Vice City!</p>
+            </div>
+        </section>
+
+        <section id="news" class="news-section">
+            <div class="container" style="max-width: 900px; margin: 0 auto;">
+                <div class="section-header-tag" style="text-align: center;">PERSONAJES PRINCIPALES</div>
+                <h2 class="section-title" style="text-align: center; margin-bottom: 40px;">LUCÍA Y JASON</h2>
+                
+                <div class="news-grid" style="grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 30px;">
+                    <div class="news-card" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="position: relative; width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 15px; background: rgba(0,0,0,0.3);">
+                                <img src="assets/images/lucia.png" alt="Lucía - GTA VI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; object-position: center;">
+                            </div>
+                            <div class="news-tag" style="display: inline-block; font-size: 0.75rem; padding: 3px 10px;">PROTAGONISTA</div>
+                            <h3 style="margin: 10px 0 8px 0; font-size: 1.3rem; color: #fff;">Lucía</h3>
+                            <p style="color: #bbb; line-height: 1.5; font-size: 0.9rem;">
+                                La primera protagonista femenina de la era moderna de la saga. Con un pasado marcado por las dificultades en los bajos fondos de Leonida, encabeza esta peligrosa historia criminal impulsada por la supervivencia, la astucia y una profunda conexión con su compañero.
+                            </p>
+                        </div>
+                        <span class="news-date" style="margin-top: 20px; display: block; font-size: 0.75rem;">VICE CITY // LEONIDA</span>
+                    </div>
+
+                    <div class="news-card" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="position: relative; width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 8px; margin-bottom: 15px; background: rgba(0,0,0,0.3);">
+                                <img src="assets/images/jason.png" alt="Jason - GTA VI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; object-position: center;">
+                            </div>
+                            <div class="news-tag" style="display: inline-block; font-size: 0.75rem; padding: 3px 10px;">COPROTAGONISTA</div>
+                            <h3 style="margin: 10px 0 8px 0; font-size: 1.3rem; color: #fff;">Jason</h3>
+                            <p style="color: #bbb; line-height: 1.5; font-size: 0.9rem;">
+                                Su pareja sentimental y cómplice en las aventuras delictivas. Inspirados en la clásica dinámica de criminales a la fuga, ambos forman una dupla inquebrantable dispuesta a arriesgarlo todo mientras ejecutan golpes de alto riesgo en las autopistas y cayos del estado.
+                            </p>
+                        </div>
+                        <span class="news-date" style="margin-top: 20px; display: block; font-size: 0.75rem;">GOLPES Y HUIDAS</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="trailer" class="media-section">
+            <div class="container" style="max-width: 1400px; margin: 0 auto;">
+                <div class="section-header-tag">VISUALIZACIÓN OFICIAL</div>
+                <h2 class="section-title">TRAILERS Y VIDEOS DE YOUTUBE</h2>
+                
+                <div class="news-grid" style="grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 30px;">
+                    <div class="news-card" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h3 style="margin-bottom: 15px; font-size: 1.25rem; color: #fff;">Tráiler Oficial 1</h3>
+                            <div style="position: relative; width: 100%; padding-bottom: 56.15%; height: 0; overflow: hidden; border-radius: 8px; margin-bottom: 20px;">
+                                <img src="https://img.youtube.com/vi/QdBZY2fkU-0/maxresdefault.jpg" alt="Trailer 1 GTA VI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=QdBZY2fkU-0" target="_blank" class="action-btn" style="display: block; text-align: center; text-decoration: none; padding: 12px; background: #ff0055; color: #fff; border-radius: 4px; font-weight: bold; font-size: 1rem;">VER EN YOUTUBE ▶</a>
+                    </div>
+
+                    <div class="news-card" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h3 style="margin-bottom: 15px; font-size: 1.25rem; color: #fff;">Tráiler Oficial 2</h3>
+                            <div style="position: relative; width: 100%; padding-bottom: 56.15%; height: 0; overflow: hidden; border-radius: 8px; margin-bottom: 20px;">
+                                <img src="https://img.youtube.com/vi/VQRLujxTm3c/maxresdefault.jpg" alt="Trailer 2 GTA VI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=VQRLujxTm3c" target="_blank" class="action-btn" style="display: block; text-align: center; text-decoration: none; padding: 12px; background: #ff0055; color: #fff; border-radius: 4px; font-weight: bold; font-size: 1rem;">VER EN YOUTUBE ▶</a>
+                    </div>
+
+                    <div class="news-card" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h3 style="margin-bottom: 15px; font-size: 1.25rem; color: #fff;">Extended Look</h3>
+                            <div style="position: relative; width: 100%; padding-bottom: 56.15%; height: 0; overflow: hidden; border-radius: 8px; margin-bottom: 20px;">
+                                <img src="https://img.youtube.com/vi/tJbzMqJGH4k/maxresdefault.jpg" alt="Extended Look GTA VI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </div>
+                        <a href="https://youtu.be/tJbzMqJGH4k" target="_blank" class="action-btn" style="display: block; text-align: center; text-decoration: none; padding: 12px; background: #ff0055; color: #fff; border-radius: 4px; font-weight: bold; font-size: 1rem;">VER EN YOUTUBE ▶</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="imagenes" class="gallery-section">
+            <div class="container" style="max-width: 1400px; margin: 0 auto;">
+                <div class="section-header-tag">ARCHIVOS VISUALES</div>
+                <h2 class="section-title">GALERÍA DE IMÁGENES</h2>
+                <div class="gallery-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                    <div class="gallery-card">
+                        <img src="assets/images/1.png" alt="GTA VI Image 1" loading="lazy" class="gallery-img">
+                    </div>
+                    <div class="gallery-card">
+                        <img src="assets/images/2.png" alt="GTA VI Image 2" loading="lazy" class="gallery-img">
+                    </div>
+                    <div class="gallery-card">
+                        <img src="assets/images/3.png" alt="GTA VI Image 3" loading="lazy" class="gallery-img">
+                    </div>
+                    <div class="gallery-card">
+                        <img src="assets/images/4.png" alt="GTA VI Image 4" loading="lazy" class="gallery-img">
+                    </div>
+                    <div class="gallery-card">
+                        <img src="assets/images/5.png" alt="GTA VI Image 5" loading="lazy" class="gallery-img">
+                    </div>
+                    <div class="gallery-card">
+                        <img src="assets/images/6.png" alt="GTA VI Image 6" loading="lazy" class="gallery-img">
+                    </div>
+                    <div class="gallery-card">
+                        <img src="assets/images/7.png" alt="GTA VI Image 7" loading="lazy" class="gallery-img">
+                    </div>
+                    <div class="gallery-card">
+                        <img src="assets/images/8.png" alt="GTA VI Image 8" loading="lazy" class="gallery-img">
+                    </div>
+                    <div class="gallery-card">
+                        <img src="assets/images/9.png" alt="GTA VI Image 9" loading="lazy" class="gallery-img">
+                    </div>
+                    <div class="gallery-card">
+                        <img src="assets/images/10.png" alt="GTA VI Image 10" loading="lazy" class="gallery-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="lightbox-modal" id="lightboxModal">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <img class="lightbox-content" id="lightboxImg" alt="Ampliada">
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <span class="logo-text">GTA <span class="highlight">VI</span></span>
+            <p>&copy; 2026 Rockstar Games, Inc. Todos los derechos reservados. Experiencia conceptual inspirada en la estética oficial.</p>
+            <p style="margin-top: 10px; font-size: 0.85rem; color: #ff0055; letter-spacing: 1px;">Página creada por Ishu</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        const modal = document.getElementById('lightboxModal');
+        const modalImg = document.getElementById('lightboxImg');
+        const closeBtn = document.getElementById('lightboxClose');
+        const galleryImages = document.querySelectorAll('.gallery-img');
+
+        galleryImages.forEach(img => {
+            img.addEventListener('click', () => {
+                modal.classList.add('active');
+                modalImg.src = img.src;
+                modalImg.classList.remove('zoomed');
+            });
+        });
+
+        modalImg.addEventListener('click', (e) => {
+            e.stopPropagation();
+            modalImg.classList.toggle('zoomed');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+            modalImg.classList.remove('zoomed');
+        });
+
+        modal.addEventListener('click', () => {
+            modal.classList.remove('active');
+            modalImg.classList.remove('zoomed');
+        });
+    </script>
+</body>
+</html>
