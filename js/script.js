@@ -1,5 +1,5 @@
 /**
- * GTA VI COUNTDOWN - PREMIUM WEB APPLICATION (V3 - Con Audio Optimizado)
+ * GTA VI COUNTDOWN - PREMIUM WEB APPLICATION (V3 - Con Audio Optimizado y Bucle de Fondos)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateCountdownAndProgress, 1000);
 
     /* ==========================================
-       2. SISTEMA DE FONDOS DINÁMICOS AUTOMÁTICOS
+       2. SISTEMA DE FONDOS DINÁMICOS AUTOMÁTICOS (BUCLE INFINITO)
        ========================================== */
     const backgroundImages = [
         'assets/images/1.png', 'assets/images/2.png', 'assets/images/3.png',
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'assets/images/13.png'
     ];
     
-    const backgroundChangeInterval = 15000;
+    const backgroundChangeInterval = 15000; // 15 segundos por imagen
     const bgContainer = document.getElementById('bgContainer');
     let currentSlideIndex = 0;
     let bgSlides = [];
@@ -105,7 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (bgSlides.length === 0) return;
 
         bgSlides[currentSlideIndex].classList.remove('active');
+        
+        // Operador módulo (%) para reiniciar el ciclo de forma automática al llegar al final
         currentSlideIndex = (currentSlideIndex + 1) % bgSlides.length;
+        
         bgSlides[currentSlideIndex].classList.add('active');
     }
 
@@ -115,20 +118,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
    /* ==========================================
-       3. GESTIÓN DE AUDIO Y EFECTOS SONOROS
-       ========================================== */
+      3. GESTIÓN DE AUDIO Y EFECTOS SONOROS
+      ========================================== */
     const soundToggleBtn = document.getElementById('soundToggle');
     const volumeSlider = document.getElementById('volumeSlider');
     const bgAudio = document.getElementById('bgAudio');
     const clickAudio = document.getElementById('clickAudio');
 
-    // Configurar ajustes iniciales de la música de fondo
     if (bgAudio) {
-        bgAudio.loop = true;      // Asegurar reproducción en bucle
-        bgAudio.volume = volumeSlider ? volumeSlider.value : 0.35; // Coge el valor inicial del slider
+        bgAudio.loop = true;      
+        bgAudio.volume = volumeSlider ? volumeSlider.value : 0.35; 
     }
 
-    // Control del botón de encendido / apagado
     if (soundToggleBtn && bgAudio) {
         const soundIcon = soundToggleBtn.querySelector('.sound-icon');
         const soundLabel = soundToggleBtn.querySelector('.sound-label');
@@ -137,12 +138,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isAudioPlaying) {
                 bgAudio.pause();
                 if (soundIcon) soundIcon.textContent = '🔇';
-                if (soundLabel) soundLabel.textContent = 'SOUND OFF';
+                if (soundLabel) soundLabel.textContent = 'AUDIO APAGADO';
                 isAudioPlaying = false;
             } else {
                 bgAudio.play().then(() => {
                     if (soundIcon) soundIcon.textContent = '🔊';
-                    if (soundLabel) soundLabel.textContent = 'SOUND ON';
+                    if (soundLabel) soundLabel.textContent = 'AUDIO ENCENDIDO';
                     isAudioPlaying = true;
                 }).catch(error => {
                     console.log("Reproducción bloqueada por políticas del navegador:", error);
@@ -151,7 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Control dinámico de la barra de volumen
     if (volumeSlider && bgAudio) {
         volumeSlider.addEventListener('input', (e) => {
             bgAudio.volume = e.target.value;
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('section[id]');
     
     function updateActiveNavOnScroll() {
-        const scrollPosition = window.scrollY + 200; // Margen de activación ajustado
+        const scrollPosition = window.scrollY + 200;
 
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
@@ -232,6 +232,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('scroll', updateActiveNavOnScroll);
-    updateActiveNavOnScroll(); // Ejecutar al cargar la página para establecer el estado inicial
+    updateActiveNavOnScroll();
 
 });
