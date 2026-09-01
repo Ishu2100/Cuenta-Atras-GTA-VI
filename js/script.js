@@ -114,19 +114,21 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(changeBackground, backgroundChangeInterval);
     }
 
-    /* ==========================================
+   /* ==========================================
        3. GESTIÓN DE AUDIO Y EFECTOS SONOROS
        ========================================== */
     const soundToggleBtn = document.getElementById('soundToggle');
+    const volumeSlider = document.getElementById('volumeSlider');
     const bgAudio = document.getElementById('bgAudio');
     const clickAudio = document.getElementById('clickAudio');
 
     // Configurar ajustes iniciales de la música de fondo
     if (bgAudio) {
         bgAudio.loop = true;      // Asegurar reproducción en bucle
-        bgAudio.volume = 0.35;    // Volumen equilibrado al 35%
+        bgAudio.volume = volumeSlider ? volumeSlider.value : 0.35; // Coge el valor inicial del slider
     }
 
+    // Control del botón de encendido / apagado
     if (soundToggleBtn && bgAudio) {
         const soundIcon = soundToggleBtn.querySelector('.sound-icon');
         const soundLabel = soundToggleBtn.querySelector('.sound-label');
@@ -146,6 +148,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log("Reproducción bloqueada por políticas del navegador:", error);
                 });
             }
+        });
+    }
+
+    // Control dinámico de la barra de volumen
+    if (volumeSlider && bgAudio) {
+        volumeSlider.addEventListener('input', (e) => {
+            bgAudio.volume = e.target.value;
         });
     }
 
