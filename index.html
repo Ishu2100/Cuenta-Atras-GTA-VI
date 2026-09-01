@@ -67,6 +67,33 @@
             display: block;
             aspect-ratio: 16/9;
         }
+
+        /* Estilos para la barra de volumen */
+        .volume-slider {
+            width: 90px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #ff0055;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
     </style>
 </head>
 <body>
@@ -102,6 +129,9 @@
                 <span class="sound-icon">🔇</span>
                 <span class="sound-label">AUDIO APAGADO</span>
             </button>
+            <!-- BARRA DE VOLUMEN AÑADIDA -->
+            <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.05" value="0.35" title="Control de Volumen">
+            
             <button class="menu-toggle" id="menuToggle" aria-label="Abrir Menú">
                 <span></span>
                 <span></span>
