@@ -1,5 +1,5 @@
 /**
- * GTA VI COUNTDOWN - PREMIUM WEB APPLICATION (V2 - Corregido y Blindado)
+ * GTA VI COUNTDOWN - PREMIUM WEB APPLICATION (V3 - Con Audio Optimizado)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -120,6 +120,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const soundToggleBtn = document.getElementById('soundToggle');
     const bgAudio = document.getElementById('bgAudio');
     const clickAudio = document.getElementById('clickAudio');
+
+    // Configurar ajustes iniciales de la música de fondo
+    if (bgAudio) {
+        bgAudio.loop = true;      // Asegurar reproducción en bucle
+        bgAudio.volume = 0.35;    // Volumen equilibrado al 35%
+    }
 
     if (soundToggleBtn && bgAudio) {
         const soundIcon = soundToggleBtn.querySelector('.sound-icon');
