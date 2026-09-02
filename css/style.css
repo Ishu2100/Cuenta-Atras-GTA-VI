@@ -103,7 +103,7 @@ body {
 }
 
 /* ==========================================
-   HEADER & NAVIGATION
+   HEADER & NAVIGATION (MODIFICADO PARA CENTRAR)
    ========================================== */
 .site-header {
     position: fixed;
@@ -133,9 +133,13 @@ body {
     text-shadow: 0 0 15px var(--neon-pink);
 }
 
+/* Menú de navegación centrado perfectamente */
 .site-nav {
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 2.5rem;
+    flex-grow: 1; /* Ocupa el espacio intermedio para forzar el centrado */
 }
 
 .nav-link {
@@ -277,7 +281,7 @@ body {
     100% { transform: scale(0.95); opacity: 0.7; }
 }
 
-/* Countdown Grid UI (Based on reference image) */
+/* Countdown Grid UI */
 .countdown-grid {
     display: flex;
     align-items: center;
@@ -328,7 +332,7 @@ body {
     opacity: 0.4;
 }
 
-/* Progress Bar Component (Based on reference image) */
+/* Progress Bar Component */
 .progress-container {
     width: 100%;
     max-width: 600px;
@@ -355,9 +359,9 @@ body {
 
 .progress-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, #ffc107, #ff5722); /* Color de la barra */
+    background: linear-gradient(90deg, #ffc107, #ff5722);
     width: 0%;
-    transition: width 1s linear; /* Hace que el avance sea fluido segundo a segundo */
+    transition: width 1s linear;
 }
 
 .progress-percentage {
@@ -368,7 +372,6 @@ body {
     letter-spacing: 1px;
 }
 
-/* Target Date Tag (Based on reference image) */
 .target-date-tag {
     font-size: 0.85rem;
     font-weight: 700;
@@ -422,7 +425,7 @@ body {
 }
 
 /* ==========================================
-   NEWS SECTION (INVENTED FEATURE)
+   NEWS SECTION
    ========================================== */
 .news-section {
     width: 100%;
@@ -663,19 +666,13 @@ body {
 /* ==========================================
    ESTILOS PARA EL LOGO DEL HEADER
    ========================================== */
-.site-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .site-brand {
     display: flex;
     align-items: center;
 }
 
 .logo-img {
-    height: 45px; /* Puedes ajustar esta altura según lo grande o pequeño que sea tu logo */
+    height: 45px;
     width: auto;
     object-fit: contain;
     transition: transform 0.3s ease, filter 0.3s ease;
@@ -683,7 +680,7 @@ body {
 
 .logo-img:hover {
     transform: scale(1.05);
-    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6)); /* Opcional: brillo dorado al pasar el ratón */
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
 }
 
 /* Estilos para la barra de volumen */
